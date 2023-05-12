@@ -38,19 +38,26 @@ php artisan backup:run --only-files
 composer require onecentlin/laravel-adminer
 ```
 
-###Update config/app.php
+### Update config/app.php
 ```
 'providers' => [
     ...
     Onecentlin\Adminer\ServiceProvider::class,
 ];
 ```
-####Created Files
+
+### Publish config and theme file
+
+```
+php artisan vendor:publish --provider="Onecentlin\Adminer\ServiceProvider"
+```
+
+#### Created Files
 config file: config/adminer.php
 theme file: public/adminer.css
 
 
-###Setup for middleware group supported
+### Setup for middleware group supported
 
 Modify config/adminer.php : 'middleware' => 'adminer',
 
@@ -69,15 +76,11 @@ protected $middlewareGroups = [
 ];
 ```
 
-##Access adminer
+## Access adminer
 Open URL in web browser
 ```
 http://[your.domain.com]/adminer
 ```
 
-###Publish config and theme file
 
-```
-php artisan vendor:publish --provider="Onecentlin\Adminer\ServiceProvider"
-```
 
