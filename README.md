@@ -27,7 +27,57 @@ php artisan backup:run --only-db
 ```
 
 
-### Step 4: f you only need to backup the files, and want to skip dumping the databases, run:
+### Step 4: If you only need to backup the files, and want to skip dumping the databases, run:
 ```
 php artisan backup:run --only-files
+
 ```
+## Adminer installation
+
+```
+composer require onecentlin/laravel-adminer
+```
+
+###Update config/app.php
+```
+'providers' => [
+    ...
+    Onecentlin\Adminer\ServiceProvider::class,
+];
+```
+####Created Files
+config file: config/adminer.php
+theme file: public/adminer.css
+
+
+###Setup for middleware group supported
+
+Modify config/adminer.php : 'middleware' => 'adminer',
+
+Modify app/Http/Kernel.php file with adminer in $middlewareGroups
+
+```
+protected $middlewareGroups = [
+    ...
+    'adminer' => [
+        \App\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        // TODO: you may create customized middleware to fit your needs
+        // example uses Laravel default authentication (default protection)
+        \Illuminate\Auth\Middleware\Authenticate::class,
+    ],
+];
+```
+
+##Access adminer
+Open URL in web browser
+```
+http://[your.domain.com]/adminer
+```
+
+###Publish config and theme file
+
+```
+php artisan vendor:publish --provider="Onecentlin\Adminer\ServiceProvider"
+```
+
